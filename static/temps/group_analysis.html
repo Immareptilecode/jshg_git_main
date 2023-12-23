@@ -1,0 +1,199 @@
+{%  extends "base_portal.html" %}
+
+{% block content %}
+
+
+	
+{%load static%}
+
+		
+			
+			<div class="ui stackable  three column grid container">
+
+					<div class=" column ">
+
+							
+
+
+							<div class="ui styled accordion" id="members_stats">
+									<div class="title">
+									    <i class="dropdown icon"></i>
+									    Total Groups
+									</div>
+  									
+  									<div class="content">
+	   									<p class="transition hidden">
+	    								<div class="ui medium statistic">
+											  <div class="value">
+											    {{group_customers|length}}
+											  </div>
+											  <div class="label">
+											    Groups
+											  </div>
+										</div>
+	    								</p>
+  									</div>
+
+
+  									<div class="title">
+									    <i class="dropdown icon"></i>
+									    Dormant Groups
+									</div>
+  									
+  									<div class="content">
+	   									<p class="transition hidden">
+	    								<div class="ui medium statistic">
+											  <div class="value">
+											    {{customers|length}}
+											  </div>
+											  <div class="label">
+											    Groups
+											  </div>
+										</div>
+	    								</p>
+  									</div>
+
+
+
+  									<div class="title">
+									    <i class="dropdown icon"></i>
+									    Active Groups
+									</div>
+  									
+  									<div class="content">
+	   									<p class="transition hidden">
+	    								<div class="ui medium statistic">
+											  <div class="value">
+											    {{customers|length}}
+											  </div>
+											  <div class="label">
+											    Members
+											  </div>
+										</div>
+	    								</p>
+  									</div>
+  
+							</div>
+
+
+					</div>
+
+
+					<div class=" column ">
+					
+						<h2 class="ui center aligned icon header inverted green">
+
+						  <i class="circular users icon" data-content="Hello. This is an inverted popup" data-variation="inverted"></i>
+						  
+						  <p>GROUPS</p>
+						  
+						  
+						</h2>
+					</div>
+
+						<div class=" column ">
+
+
+					
+							
+							<div class="ui category  search" id="gsearch">
+
+								<div class="ui icon input">
+									<input class="prompt fluid" placeholder="Use Membership No." type="text">
+								    <i class="search icon"></i>
+						    	</div>
+
+								<div class="results">
+									
+								</div>
+						
+							</div>
+						</div>
+			</div>
+
+				 <div class="ui five column grid">
+			    <div class="column"></div>
+			    <div class="column"></div>
+			    <div class="column">
+					
+				</div>
+      <div class="column"></div>
+      <div class="column"></div>
+    </div>
+
+				
+
+			  	<div class="sixteen wide column">
+				  	<ul>
+						
+					</ul>
+			  	</div>
+
+			</div>
+
+			
+		</div>
+
+
+
+<script type="text/javascript">
+	
+	$('#members_stats').accordion();
+</script>
+
+<script type="text/javascript">
+//storage
+
+
+var get_groups= function(url){
+	 $.get(
+	 	 url,
+
+		function  (data) {
+			$('#gsearch')
+				.search({
+
+					searchFields   : [
+				      'membership_no'
+				    ],
+
+				    fields: {
+
+				    
+				    description: 'membership_no',
+				    url: 'url',
+				    title:'name'
+				   },
+
+				source: data,
+				type: 'standard',
+
+				    fullTextSearch: false
+
+
+
+
+
+			});
+		},
+		);
+};
+
+//call to get members
+$(document).ready( function(){
+	get_groups("{% url 'grouplist'%}");
+});
+
+
+//console.log(groupsstr.get('customers'))
+
+
+//search is passed the results through source.. 
+
+
+
+</script>
+
+
+
+{% endblock content %}

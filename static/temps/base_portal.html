@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+{% load static %}
+<meta charset="utf-8">
+<title>Jiendeleze Work Portal</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"> </script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" rel="stylesheet">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"> </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"> </script>
+ 
+</head>
+<body>
+</br>
+
+         
+           			
+                <div class="ui inverted sidebar left menu vertical scale down" id="leftmenu">
+               		<div class="two column grid">
+
+
+               			<div class="column">
+               				
+
+
+               			
+               			<h4 class="ui horizontal divider header">
+                			<a class="item"  href="{% url 'customerslist' %}">
+                			JIENDELEZE  </br> S.H.G
+
+                			</hr>
+                			</br>
+                			<i class="home icon"></i> 
+                			
+                			</a>  
+
+                		</h4>
+                	
+               			</div>
+               			</br>
+               			<div class="column">
+		        		<div class="ui animated fade button fluid inverted" tabindex="0" id="leftmenu_close">
+						  <div class="visible content"><i class=" close icon"></i></div>
+						  <div class="hidden content">
+						  CLOSE THIS MENU!
+						    
+						  </div>
+						</div>	
+						</div>
+
+               		</div>
+                		
+		                	
+		                	
+		           
+                <div class="ui  divider "> </div>
+                  
+                  <a class="item " href="{% url 'customerslist' %}">
+                      <p class="ui label teal"> MEMBERS</p>
+                      <i class="user icon"></i> 
+                      </br>
+                      
+                    </a>
+
+                    <a class="item " href="{% url 'groups' %}">
+                      <p class="ui label teal" > GROUPS</p>
+                      <i class="users bill icon"></i> 
+                      </br>
+                      
+                    </a>
+                    
+                    <a class="item " href="{% url 'reportshome' %}">
+                      <p class="ui label teal"> FINANCIAL REPORTS</p>
+                      <i class="money bill icon"></i> 
+                      </br>
+                      
+                    </a>
+
+
+                    <a class="item " href="{% url 'loans' %}">
+                      <p class="ui label teal">  LOANS</p>
+                      <i class="handshake icon"></i> 
+                      </br>
+                      
+                    </a>
+
+                    <h4 class="ui horizontal divider header">
+                    		 <a class="item  ui inverted green basic button" href="{%url 'admin:logout'%}">
+	                                            	LOG OUT
+	                </a>
+
+                    </h4>
+
+                     <div class="ui  divider "></div>
+
+                 
+	               
+	    
+  				
+             
+                </div>
+
+        
+                
+                
+                	
+                
+                
+                            <div class="ui stackable three column grid container">
+                              <div class="row">
+                              	
+
+
+                              
+	                            <div class="four wide column">
+	                                <div class="following bar  fixed">
+	                                    <div class=" ui container">
+	                                        <div class="ui large secondary network menu">
+
+	                                        	<div class="item" data-tooltip="Show More Options." data-position="bottom left" data-inverted="" data-variation="tiny">
+	                                            	
+	                                          		<a class="item" id='switch'>
+
+	                                            	<i class="sidebar icon"></i>
+	                                            	MENU
+	                                            	</a>
+	                                            	
+	                                          	</div>
+
+
+	                                          	
+
+	                                        </div>
+	                                      
+	                                    </div> 
+	                                      
+	                                </div>
+	                                 </div>
+
+	                                 <div class="column"></div>
+	                                 <div class=" column">
+											<div class=" ui container">
+												<h4 class="ui centered aligned header" id="date1">
+											
+												
+												</h4>
+
+											</div>
+										</div>
+
+
+	                           <!--  ENd of row -->
+	                           <div class="row">
+
+								
+								  
+										<div class="two wide column">
+											<div class=" ui container">
+												<h4 class="ui centered aligned header">JIENDELEZE SELF HELP GROUP
+													<div class="sub header">Work Portal</div>
+												
+												</h4>
+												
+
+											</div>
+										</div>
+										
+
+								 
+									</div>
+
+									
+
+
+									                           
+								                    </div>
+								                      
+                        
+
+							</div>
+
+                      
+            				</div>
+              	
+
+              
+ 
+	                            {%block content%}
+
+
+
+
+{% endblock content%}
+ 
+
+
+</body>
+
+<script type="text/javascript">
+var data=$('#date1')
+today=new Date()
+data.html(today.toLocaleDateString())
+
+
+
+$("#switch").on('click', function(){
+$('#leftmenu').sidebar('toggle')
+
+})
+
+$('#leftmenu_close').on('click', function(){
+
+	$('#leftmenu').sidebar('hide')
+})
+
+</script>
+
+</html>

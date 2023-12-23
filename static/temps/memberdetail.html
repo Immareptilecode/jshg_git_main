@@ -1,0 +1,1275 @@
+{%  extends "base_portal.html" %}
+
+{% block content %}
+{%load static%}
+{%load humanize %}
+<!-- modals-->
+
+<!-- loan payment modal -->
+<div class="ui basic modal" id="choose_type">
+  <div class="header">REPAYMENT FOR {{current_loan.0.Amount|intcomma}} KSH LOAN</div>
+  <div class="content">
+    
+  		<div class="ui form " method="post" id="payloanform">
+   		{% csrf_token%}
+   			<div class="ui success message">
+		    	<div class="header">Transaction Completed</div>
+		    	<p id="success_message">Payment Recorded. Please reload the page to refresh the loan repayment table </p>
+  			</div>
+
+  			<div class="ui error message">
+		    	<div class="header">ooops... wait!</div>
+		    	<p id="errormessage">I think you are not Authenicated. Please Reload the page to LOG IN . </p>
+  			</div>
+			<div class="fields">
+			  	<div class="field">
+			  		<label>Amount</label>
+			    	<input type="text" id="loan_amnt">
+
+			  	</div>
+			  	<div class="field">
+			  		<label>Date</label>
+			    	<input type="date" id='loan_DATE'>
+
+			  	</div>
+			    
+			</div>
+		</div>
+
+
+
+  </div>
+  <div class="actions">
+	   	<div class="ui red basic cancel inverted button">
+	      <i class="remove icon"></i>
+	      CLOSE
+	    </div>
+	    <div class="ui green inverted button" id="sendpayment_button">
+	      <i class="checkmark icon"></i>
+	      SUBMIT
+	    </div>
+
+  </div>
+
+  </div>
+
+
+
+
+
+<div class="ui basic modal" id="loan_offset">
+  <div class="header"> OFFSET LOAN BALANCE OF {{loan_balance|intcomma}} KSH </div>
+  <div class="content">
+    
+  		<div class="ui form " method="post" id="offsetloanform">
+   		{% csrf_token%}
+   			<div class="ui success message">
+		    	<div class="header">Transaction Completed! </div>
+		    	<p id="success_message_offset"></p>
+  			</div>
+
+  			<div class="ui error message">
+		    	<div class="header">Transaction Failed! </div>
+		    	<p id="errormessage_offset"> </p>
+  			</div>
+			<div class="fields">
+			  	<div class="field">
+			  		<label>Amount</label>
+			    	<input type="text" id="offset_amount">
+
+			  	</div>
+			  	<div class="field">
+			  		<label>Date</label>
+			    	<input type="date" id='offset_date'>
+
+			  	</div>
+			    
+			</div>
+		</div>
+
+
+
+  </div>
+  <div class="actions">
+	   	<div class="ui red basic cancel inverted button">
+	      <i class="remove icon"></i>
+	      CLOSE
+	    </div>
+	    <div class="ui green inverted button" id="send_offsetbtn">
+	      <i class="checkmark icon"></i>
+	      SUBMIT
+	    </div>
+
+  </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+<!-- Beneficiareies modal-->
+<div class="ui modal" id="benef">
+  <i class="close icon"></i>
+	<div class="header">
+	    {{member.first_name}}'s  Beneficiaries
+	</div>
+
+	<div class="scrolling content">
+
+		<p>{{member.beneficiaries}}
+		</p>
+	</div>
+	<div class="actions">
+
+		<div class="ui black deny button">
+	      close
+	    </div>
+	</div>
+
+</div>
+
+
+
+
+
+
+<!-- pay shares modal-->
+<div class="ui basic modal" id='payshares'>
+  <div class="ui icon header">
+    <i class="archive icon"></i>
+    Record Shares.
+  </div>
+  <div class="content">
+   		<div class="ui inverted form " method="post" id="paysharesform">
+   		{% csrf_token%}
+   			<div class="ui success message">
+		    	<div class="header">Form Completed</div>
+		    	<p>Payment Recorded.</p>
+  			</div>
+
+  			<div class="ui error message">
+		    	<div class="header">ooops... wait!</div>
+		    	<p>I think you are not Authenicated. Please Reload the page to LOG IN . </p>
+  			</div>
+			<div class="fields">
+			  	<div class="field">
+			  		<label>Amount</label>
+			    	<input type="text" id="amnt">
+
+			  	</div>
+			  	<div class="field">
+			  		<label>Date</label>
+			    	<input type="date" id='DATE'>
+
+			  	</div>
+			    
+			</div>
+		</div>
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button">
+      <i class="remove icon"></i>
+      CLOSE
+    </div>
+    <div class="ui green inverted button" id="sendshares_button">
+      <i class="checkmark icon"></i>
+      SUBMIT
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- pay shares modal-->
+<div class="ui basic indigo modal" id='paysharecapital'>
+  <div class="ui icon header">
+    <i class="archive icon"></i>
+    MAKE SHARE CAPITAL ENTRY.
+  </div>
+  <div class="content">
+   		<div class="ui inverted form " method="post" id="paysharecapitalform">
+   		{% csrf_token%}
+   			<div class="ui success message">
+		    	<div class="header">Form Completed</div>
+		    	<p>Payment Recorded.</p>
+  			</div>
+
+  			<div class="ui error message">
+		    	<div class="header">ooops... wait!</div>
+		    	<p>I think you are not Authenicated. Please Reload the page to LOG IN . </p>
+  			</div>
+			<div class="fields">
+			  	<div class="field">
+			  		<label>Amount</label>
+			    	<input type="text" id="sharecapital_amnt">
+
+			  	</div>
+			  	<div class="field">
+			  		<label>Date</label>
+			    	<input type="date" id='sharecapital_date'>
+
+			  	</div>
+			    
+			</div>
+		</div>
+  </div>
+  <div class="actions">
+    <div class="ui red basic cancel inverted button">
+      <i class="remove icon"></i>
+      CLOSE
+    </div>
+    <div class="ui green inverted button" id="sendsharecapital_button">
+      <i class="checkmark icon"></i>
+      SUBMIT
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Add fines modal-->
+<div class="ui small inverted modal" id='addfines'>
+  <div class="ui icon header">
+  <div class="top attached header">
+  	<i class="pencil alternate icon"></i>
+   			 FINES FORM
+   		</div>
+    
+  </div>
+  <div class="content">
+  		<div class="ui inverted segment">
+  			
+
+  		
+   		<div class="ui inverted form " method="post" id="addfinesform">
+   		
+   		{% csrf_token%}
+   			<div class="ui success message">
+		    	<div class="header">Operation was successful</div>
+		    	<p>Fine Recorded.</p>
+  			</div>
+
+  			<div class="ui error message">
+		    	<div class="header">ooops... wait!</div>
+		    	<p>something may have gone wrong please reload the page and try again</p>
+  			</div>
+			<div class="two fields ">
+			  	<div class="field">
+			  		<label>Amount</label>
+			    	<input type="text" id="fine_amount">
+
+			  	</div>
+			  	<div class="field">
+			  		<label>Date</label>
+			    	<input type="date" id='fine_date' class="inverted">
+
+			  	</div>
+			</div>
+			<div class="two fields">
+				
+				<div class="twelve wide field" >
+
+					<div class="ui selection dropdown">
+				        <input name="Particulars" type="hidden" id="fine_parts">
+				          <i class="dropdown icon"></i>
+				          <div class="default text">Particulars</div>
+				          <div class="menu">
+				              <div class="item" data-value="non contribution">Shares non-contribution</div>
+				              <div class="item" data-value="Loan Fine">Loan Fine</div>
+				              <div class="item" data-value="Absentism"> Absentism</div>
+				              <div class="item" data-value="Cashfines"> Cash Fine</div>
+				              <div class="item" data-value="lateReceipt"> Late Receipt submission</div>
+				              <div class="item" data-value="Interest Fine"> Interest Fine</div>
+
+				         
+				          </div>
+				    </div>
+
+
+
+
+			  	
+			    	
+
+			  	</div>
+
+			</div>
+			  	
+			    
+			
+		</div>
+
+		</div>
+  </div>
+  <div class="actions">
+  	<div class="ui inverted segment">
+	    <div class="ui red basic cancel inverted button">
+	      <i class="remove icon"></i>
+	      CLOSE
+	    </div>
+	    <div class="ui green inverted button" id="fineacc_button">
+	      <i class="checkmark icon"></i>
+	      SUBMIT
+	    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+<!-- add charges modal-->
+<div class="ui small inverted modal" id='addcharges'>
+  <div class="ui icon header">
+  <div class="top attached header">
+  	<i class="pencil alternate icon"></i>
+   			 CHARGES FORM
+   		</div>
+    
+  </div>
+  <div class="content">
+  		<div class="ui inverted segment">
+  			
+
+  		
+   		<div class="ui inverted form " method="post" id="addchargesform">
+   		
+   		{% csrf_token%}
+   			<div class="ui success message">
+		    	<div class="header">Operation was successful</div>
+		    	<p>Charge Recorded.</p>
+  			</div>
+
+  			<div class="ui error message">
+		    	<div class="header">ooops... wait!</div>
+		    	<p>something may have gone wrong please reload the page and try again</p>
+  			</div>
+			<div class="two fields ">
+			  	<div class="field">
+			  		<label>Amount</label>
+			    	<input type="text" id="charge_amount">
+
+			  	</div>
+			  	<div class="field">
+			  		<label>Date</label>
+			    	<input type="date" id='charge_date' class="inverted">
+
+			  	</div>
+			</div>
+			<div class="two fields">
+				
+				<div class="twelve wide field" >
+
+					<div class="ui selection dropdown">
+				        <input name="Particulars" type="hidden" id="charge_parts">
+				          <i class="dropdown icon"></i>
+				          <div class="default text">Particulars</div>
+				          <div class="menu">
+				              <div class="item" data-value="loan form">Loan Form</div>
+				              <div class="item" data-value="office">Office fee</div>
+				              <div class="item" data-value="exitfee">Exit fee</div>
+				              <div class="item" data-value="newMembership">New Membership fee</div>
+				              
+				          </div>
+				    </div>
+
+
+
+
+			  	
+			    	
+
+			  	</div>
+
+			</div>
+			  	
+			    
+			
+		</div>
+
+		</div>
+  </div>
+  <div class="actions">
+  	<div class="ui inverted segment">
+	    <div class="ui red basic cancel inverted button">
+	      <i class="remove icon"></i>
+	      CLOSE
+	    </div>
+	    <div class="ui green inverted button" id="chargeacc_button">
+	      <i class="checkmark icon"></i>
+	      SUBMIT
+	    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+<!-- pay charges modal-->
+<div class="ui small inverted modal" id='paycharges'>
+  	<div class="ui icon header">
+  		<div class="top attached header">
+  			<i class="pencil alternate icon"></i>
+   			pay CHARGES 
+   		</div>
+    
+  	</div>
+  	<div class="content">
+  		<div class="ui inverted teal segment">
+	  		<div class="ui inverted form " method="post" id="paychargesform">
+	   		
+	   		{% csrf_token%}	
+	   			<div class="ui success message">
+			    	<div class="header">Operation was successful</div>
+			    	<p>Charges paid!</p>
+	  			</div>
+
+	  			<div class="ui error message">
+			    	<div class="header">ooops... wait!</div>
+			    	<p id="paycharges_error_message" >something may have gone wrong please reload the page and try again</p>
+	  			</div>
+	   				<div class="two fields ">
+					  	<div class="field">
+					  		<label>Amount</label>
+					    	<input type="text" id="paycharges_amount">
+
+					  	</div>
+					  	<div class="field">
+					  		<label>Date</label>
+					    	<input type="date" id='paycharges_date' class="inverted">
+
+					  	</div>
+					</div>
+					<div class="grouped fields">
+						<div class="field">
+							<label> CHARGES</label>
+								<div class="ui  multiple search selection dropdown">
+								<input name="country" type="hidden" id="paycharges_select">
+								<i class="dropdown icon"></i>
+									<div class="default text">Select the debts you wish to pay.</div>
+									<div class="menu" id="charges_choices">
+									
+
+										
+																				
+									
+										</div>
+								</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	
+		<div class="actions">
+			<div class="ui inverted grey segment">
+		    <div class="ui red basic cancel inverted button">
+		      <i class="remove icon"></i>
+		      CLOSE
+		    </div>
+		    <div class="ui green inverted button" id="paycharges_button">
+		      <i class="checkmark icon"></i>
+		      SUBMIT
+		    </div>
+	  		</div>
+  		</div>
+</div>
+
+
+
+
+
+
+
+<!-- pay fines modal-->
+<div class="ui small inverted modal" id='payfines'>
+  	<div class="ui icon header">
+  		<div class="top attached header">
+  			<i class="pencil alternate icon"></i>
+   			pay Fines 
+   		</div>
+    
+  	</div>
+  	<div class="content">
+  		<div class="ui inverted teal segment">
+	  		<div class="ui inverted form " method="post" id="payfinesform">
+	   		
+	   		{% csrf_token%}	
+	   			<div class="ui success message">
+			    	<div class="header">Operation was successful</div>
+			    	<p>fines paid!</p>
+	  			</div>
+
+	  			<div class="ui error message">
+			    	<div class="header">ooops... wait!</div>
+			    	<p id="payfines_error_message">something may have gone wrong please reload the page and try again</p>
+	  			</div>
+	   				<div class="two fields ">
+					  	<div class="field">
+					  		<label>Amount</label>
+					    	<input type="text" id="payfines_amount">
+
+					  	</div>
+					  	<div class="field">
+					  		<label>Date</label>
+					    	<input type="date" id='payfines_date' class="inverted">
+
+					  	</div>
+					</div>
+					<div class="grouped fields">
+						<div class="field">
+							<label> Fines</label>
+								<div class="ui  multiple search selection dropdown">
+								<input name="country" type="hidden" id="payfines_select">
+								<i class="dropdown icon"></i>
+									<div class="default text">Select the debts you wish to pay.</div>
+									<div class="menu" id="fines_choices">
+									
+
+										
+																				
+									
+									</div>
+								</div>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	
+		<div class="actions">
+			<div class="ui inverted grey segment">
+		    <div class="ui red basic cancel inverted button">
+		      <i class="remove icon"></i>
+		      CLOSE
+		    </div>
+		    <div class="ui green inverted button" id="payfines_button">
+		      <i class="checkmark icon"></i>
+		      SUBMIT
+		    </div>
+	  		</div>
+  		</div>
+</div>
+
+
+
+
+
+
+<!--end of modals-->
+
+<div class="ui stackable sixteen column grid container fluid">
+
+
+	
+
+		<div class=" four wide column">
+				<div class="ui centered inverted blue card">
+					{%if member.photo%}
+					<img src="{{member.photo.url}}" width="250" height="150">
+					{%else%}
+
+					{%endif%}
+
+
+
+				    <div class="content">
+				  		<div class="meta">
+				        	<a>Name:</a>
+				    	</div>
+				    	<a class="header">{{member.first_name}}</a>
+
+				    	<div class="meta">
+				        	<a>Membership Number: </a>
+				    	</div>
+				  		<span class="header">
+
+			    				 {{member.membership_no}}
+			    		</span>
+			    	</div>	
+
+			    	<div class="extra content">
+			    		<div class="meta">
+				        	<a>Joined:</a>
+				    	</div>
+				      		<span class="header">
+				        	 {{member.join_date.year}}
+				      		</span>
+				    </div>
+			    </div>
+
+			    <div class="ui styled accordion" id="download_receipt">
+						<h4 class="ui attached header inverted">Today's  Transactions</h4>
+						<div class="title">
+							<i class="dropdown icon "></i>
+							Downloads
+						</div>
+						<div class="content" id="shares_receipts">
+							
+							
+								<a class="ui button  blue" href="{% url 'sharespdf' member.id %}">
+									Get Receipt
+								</a>		
+							
+							    
+													    
+											
+						</div>
+
+						
+				</div>
+
+		</div>
+
+		<div class="eight wide column">
+			
+			<div class="ui sixteen column grid">
+  				<div class="four wide column">
+  					
+	    				<div class="ui vertical fluid tabular menu " id="menufinance">
+					    	<div class="active item" data-tab="shares" id="itemenufinance"> 
+					        	SHARES
+					    	</div>
+					    	 <a class="item" data-tab="sharecapital" id="itemenufinance">
+					        	SHARE CAPITAL
+					        </a>
+					        <a class="item" data-tab="debts" id="itemenufinance">
+					        	DEBTS
+					        </a>
+					        <a class="item" data-tab="loan" id="itemenufinance">
+					        	LOAN
+					        </a>
+		      				
+		      			
+	    				</div>
+    				
+  				</div>
+
+
+  				<div class="twelve wide stretched column">
+
+  					
+    				<div class="ui segment">
+    					
+	      				<div class="ui active tab" data-tab="shares">
+						  <!-- Tab Content !-->
+						  	<div class="ui two column grid stackable">
+						  		<div class="ui top attached label blue">Shares</div>
+						  		<div class="column">
+						  			
+
+										<p class="transition hidden">
+	    								<div class="ui medium statistic">
+											  <div class="value" id="members_totalshares">
+											    0
+											  </div>
+											  <div class="label">
+											    Ksh
+											  </div>
+										</div>
+	    								</p>
+						  		</div>
+
+						  		<div class="column">
+						  				</br>
+						  				<div class="ui green button" id='launchpayshares'>
+									      Make Shares Entry
+									    </div>
+
+						  		</div>
+						  		
+
+						  	</div> <!-- end of two column grid-->
+							
+
+	    								
+						  
+						</div> <!-- end of shares tab-->
+
+
+						<div class="ui tab" data-tab="sharecapital">
+						  <!-- Tab Content !-->
+						  	<div class="ui two column grid stackable">
+						  		<div class="ui top attached label black">Share Capital</div>
+						  		<div class="column">
+						  			
+
+										<p class="transition hidden">
+	    								<div class="ui medium statistic">
+											  <div class="value" id="members_totalsharecapital">
+											    0
+											  </div>
+											  <div class="label">
+											    Ksh
+											  </div>
+										</div>
+	    								</p>
+						  		</div>
+
+						  		<div class="column">
+						  				</br>
+						  				<div class="ui green button" id='launchpaysharecapital'>
+									      Add Share Capital
+									    </div>
+
+						  		</div>
+						  		
+
+						  	</div> <!-- end of two column grid-->
+							
+
+	    								
+						  
+						</div> <!-- end of share capital tab-->
+
+
+
+
+						<div class="ui tab" data-tab="debts">
+						  <!-- Tab Content !-->
+							<div class="ui top attached label purple">Debts</div>
+							
+									<div class="ui styled accordion" id="debt_breakdown">
+										<h4 class="ui attached header inverted"> BREAKDOWN</h4>
+											<div class="title">
+												<i class="dropdown icon"></i>
+												<div class="ui small horizontal statistic">
+													<div class="value"> CHARGES</div>
+												</div>
+												
+						  						<div class="ui medium  statistic">
+						  								
+													<div class="value" id="charges_figure">
+														<div class="ui tiny  statistic">
+															<div class="value">
+																Please reload to retry fetching data
+															</div>
+																	
+														</div>
+													</div>
+
+													<div class="label">
+														Ksh
+											  		</div>
+
+												</div>
+
+											</div>
+											<div class="content">
+												<div class="ui teal button" id='add_charge'>
+													Add Charge
+												</div>
+												<div class="ui green button" id='paycharge'>
+													Pay Charges
+												</div>
+
+												<p class="transition hidden">
+													<table class="ui sortable celled table unstackable" id="charges_table">
+													  	<thead>
+														    <tr>
+														      	<th>Particulars</th>
+														      	<th class="">Amount due</th>
+														      	<th class="sorted descending">Date</th>
+														    </tr>
+													  	</thead>
+													  	<tbody id="table_body_charges">
+													    
+													    </tbody>
+													  
+													</table>
+	   											</p>
+
+  											</div>
+
+
+
+
+  										
+											<div class="title">
+												<i class="dropdown icon"></i>
+													<div class="ui small horizontal statistic">
+														<div class="value"> FINES</div>
+													</div>
+						  							<div class="ui medium  statistic">
+						  									
+
+														<div class="value" id="fines_figure">
+															<div class="ui tiny  statistic">
+																<div class="value">
+																	Please reload to retry fetching data
+																</div>
+																	
+															</div>
+
+														</div>
+														<div class="label">
+															  Ksh
+												  		</div>
+															
+													</div>
+											
+											</div>
+											<div class="content">
+
+												<div class="ui teal button" id='add_fine'>
+													Add Fine
+												</div>
+
+												<div class="ui green button" id='payfine'>
+													Pay Fine
+												</div>
+
+												<p class="transition hidden">
+
+													<table class="ui sortable celled table unstackable" id="fines_table">
+														<thead>
+														    <tr>
+														      <th>Particulars</th>
+														      <th class="">Amount due</th>
+														      <th class="sorted descending">Date</th>
+														    </tr>
+														</thead>
+														<tbody id="table_body_fines">
+														    
+														</tbody>
+													  
+													</table>
+
+	   											</p>
+
+  											</div>
+
+									</div> <!-- end of accordination-->
+						</div> <!--end of debts ui tab -->
+
+						<div class="ui tab" data-tab="loan">
+							<div class="ui top attached label teal">Loans</div>
+
+								<div class="ui two column grid">
+									
+									<h2 class="ui header">
+									  	<i class="handshake icon"></i>
+									  	<div class="content">
+									    	Current Loan
+									 	 </div>
+
+									 	
+
+									 	
+									 	
+									</h2>
+
+									<div class="column">
+										<div class="ui list">
+											<div class="item">
+										    	<div class="header">Amount</div>
+										   		{{current_loan.0.Amount|intcomma}} KSH
+										  	</div>
+
+											<div class="item">
+										   		<div class="header">Date of Disbursment</div>
+										    		{{current_loan.0.Date_disbursment}}
+										  	</div>
+										  
+										  	<div class="item">
+										    	<div class="header">Status</div>
+										   		{{loan_balance|intcomma}} KSH
+										  	</div>
+										</div>
+
+
+									</div>
+									<div class="column">
+										
+									
+										<div class="ui center aligned teal segment">
+
+									
+
+												<div class="column">
+													
+
+												
+												<a class="ui blue button" id="launch_offset">
+
+													Make Loan offset payment
+												</a>
+												</div>	
+										
+										
+
+
+												<div class="ui horizontal divider">
+													or
+												</div>
+
+										<a class="ui green button" id="launch_payment_options">
+
+										Make Loan installment payment
+										</a>
+
+									
+									
+										</div>
+									</div>
+									<div class="column">
+										<div class="ui olive circular segment">
+										<div class="ui grid">
+											<div class="column">
+												<a class="ui grey button" href="{% url 'loan_summary' member.id%}">
+
+												View Detailed Information
+												</a>
+
+											</div>
+
+										</div>
+										</div>
+
+									</div>
+									
+									
+								</div>
+								
+								
+							
+							
+
+								
+								
+									
+
+								
+								
+							
+  						</div>
+
+    			
+  				</div> <!-- end of segment -->
+
+  				</div> <!--end of 12 wide column -->
+
+  				</div> <!-- end of 16 column grid -->
+
+
+		</div> <!-- end of 12 wide column (center)--> 
+
+		<div class=" four wide column ">
+			
+
+			
+
+	  			<div class="ui  vertical accordion menu" id="member_data">
+				    <div class=" item">
+				    	<a class="title">
+				    		<i class="dropdown icon"></i>
+				    		Personal Information
+						</a>
+				     
+					    <div class=" content">
+
+
+						    <div class="ui divided selection list">
+						    	<a class="ui blue ribbon label">
+					    		
+					    		Bio data
+								</a>
+								  	<a class="item">
+									    <div class="ui grey horizontal label">First name</div>
+									    {{member.first_name}}
+								    </a>
+			  						
+			  						<a class="item">
+									    <div class="ui grey horizontal label">Surname</div>
+									    {{member.surname}}
+			  						</a>
+
+								  	<a class="item">
+									    <div class="ui grey horizontal label">Last Name</div>
+									    {{member.last_name}}
+								  	</a>
+
+								   	<a class="item">
+									    <div class="ui grey horizontal label">Sex</div>
+									    {{member.sex}}
+								  	</a>
+
+								    <a class="item">
+									    <div class="ui grey horizontal label">Date of Birth</div>
+									    {{member.date_of_birth}}
+									</a>
+
+								    <a class="item">
+									    <div class="ui grey horizontal label">Occupation</div>
+									    {{member.occupation}}
+								  	</a>
+								<a class="ui purple ribbon label">
+					    		
+					    		place  of birth
+								</a>
+									<a class="item">
+									    <div class="ui grey horizontal label">COUNTY</div>
+									    {{member.county}}
+								  	</a>
+								  	<a class="item">
+									    <div class="ui grey horizontal label">SUB-COUNTY</div>
+									    {{member.subcounty}}
+								  	</a>
+
+								  	<a class="item">
+									    <div class="ui grey horizontal label">WARD</div>
+									    {{member.ward}}
+								  	</a>
+
+									<a class="item">
+									    <div class="ui grey horizontal label">VILLAGE</div>
+									    {{member.village}}
+									</a>
+
+							</div>
+
+							<div class="ui divided selection list">
+
+
+								<a class="ui brown ribbon label">
+										    		
+									Contact  details
+								</a>
+							 		<a class="item">
+									    <div class="ui black horizontal label">Email</div>
+									   	{{member.email}}
+							  		</a>
+
+							  		<a class="item">
+									    <div class="ui black horizontal label">Phone number</div>
+									   	{{member.phone_no}}
+							  		</a>
+
+							  		<a class="item">
+									    <div class="ui black horizontal label">Alternate Phone number</div>
+									   	{{member.phone_no2}}
+							  		</a>
+
+							   		<a class="item">
+									    <div class="ui black horizontal label">Residence</div>
+									   	{{member.residence}}
+							  		</a>
+							 	
+							</div>
+						<!-- end of content -->
+					    </div>
+
+
+					<!-- edn of item (personal info)-->
+				    </div>
+
+
+				    <div class="item">
+				    	<a class="title">
+				    		<i class="dropdown icon"></i>
+				    		Financial Information
+						</a>
+				      	<div class="content">
+				      		<div class="ui divided selection list">
+
+
+								<a class="ui brown ribbon label">
+										    		
+									Bank  details
+								</a>
+							 		<a class="item">
+									    <div class="ui black horizontal label">Bank</div>
+									   	{{member.Bank}}
+							  		</a>
+
+							  		<a class="item">
+									    <div class="ui black horizontal label">Branch</div>
+									   	{{member.Branch}}
+							  		</a>
+
+							  		<a class="item">
+									    <div class="ui black horizontal label">account number</div>
+									   	{{member.ac_no}}
+							  		</a>
+
+							   		
+							 	
+							</div>
+				    	</div>
+				      
+				    </div>
+				    
+				    <div class="item">
+				    	<a class="title">
+				    		<i class="dropdown icon"></i>
+				    		Next of Kin Information
+						</a>
+				      	<div class="content">
+				      		<div class="ui divided selection list">
+
+
+							
+							 		<a class="item">
+									    <div class="ui black horizontal label">Name</div>
+									   	{{member.nok_name}}
+							  		</a>
+
+							  		<a class="item">
+									    <div class="ui black horizontal label">Relationship</div>
+									   	{{member.nok_relationship}}
+							  		</a>
+
+							  		<a class="item">
+									    <div class="ui black horizontal label">ID /Birth cert NO.</div>
+									   	{{member.nok_id}}
+
+							  		</a>
+
+							   		<a class="item">
+									   
+							   		<a class="ui orange ribbon label">
+										    		
+								
+
+									   	<div class="ui vertical basic buttons" id="launch_benef">
+									   	</br>
+										  <button class="ui button inverted black">Open</button>
+										 
+										</div>
+							  		</a>
+							 	
+							</div>
+				    	</div>
+				    </div>
+				    
+	  			</div>
+			
+		</div>
+
+
+
+</div>
+<script type="text/javascript" src="{% static 'js/jquery.storageapi.js'%}"></script>
+<script type="text/javascript">
+	var paystr= $.sessionStorage
+</script>
+<script type="text/javascript" src="{%static 'js/customd-jquery-number-c19aa59/jquery.number.js'%} "></script>
+<script type="text/javascript" src="{% static 'js/jshg_portal/finance/shares.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/jshg_portal/finance/debts.js'%}"></script>	
+<script type="text/javascript" src="{% static 'js/jshg_portal/finance/share_capital.js'%}"></script>	
+<script type="text/javascript" src="{% static 'js/jshg_portal/loans/loan_offset_individual.js'%}"></script>
+
+<script type="text/javascript" src="{% static 'js/jshg_portal/loans/loan_rypmnt.js'%}"></script>
+<script type="text/javascript">
+
+
+Indi_share_ops.init(["{% url 'addshares' member.pk%}", "{{member.pk}}", "{% url 'get_shares_individual'  member.pk %}"])
+Indi_share_ops.get_shares();
+
+$('#sendshares_button').on('click', function(e){
+
+
+
+Indi_share_ops.give_me_shares();
+})
+
+
+
+
+
+
+Indi_sharecapital_ops.init(["{% url 'addsharecapital' member.pk%}", "{{member.pk}}", "{% url 'TotalIndividual_sharecapital' member.pk%}"])
+Indi_sharecapital_ops.get_deductions();
+
+$('#sendsharecapital_button').on('click', function(e){
+
+
+
+Indi_sharecapital_ops.send_sharecapital()
+//to use objects in functions you need to re initialize them
+Indi_share_ops.init(["{% url 'addshares' member.pk%}", "{{member.pk}}", "{% url 'get_shares_individual'  member.pk %}"])
+Indi_share_ops.get_shares();
+
+})
+
+
+
+
+
+
+
+
+Indi_debt_ops.init(["{% url 'charge_individual' member.pk%}", "{% url 'fine_individual' member.pk%}", "{{member.pk}}", "{% url 'payfines_individual'%}", "{%url 'paycharges_individual'%}"]);
+
+get_charges_individual("{% url 'charge_individual' member.pk%}");
+
+get_fines_individual("{% url 'fine_individual' member.pk%}")
+
+
+
+$("#chargeacc_button").on('click', function(){
+	Indi_debt_ops.charge_account();
+});
+
+
+$("#fineacc_button").on('click', function(){
+	Indi_debt_ops.fine_account();
+
+
+
+});
+
+$("#payfines_button").on('click', function(){
+Indi_debt_ops.pay_fine();
+});
+
+$('#paycharges_button').on("click", function(){
+
+Indi_debt_ops.pay_charge();
+});
+
+
+
+	
+
+Indi_loan_ops.init(['{% url "loan_register" member.pk%}', "{{current_loan.0.pk}}", "{{current_loan.0.installments}}"])
+
+$('#sendpayment_button').on('click', function(){
+
+
+Indi_loan_ops.pay_loan();
+});
+
+
+
+
+
+
+
+Indi_offset_ops.init(['{% url "offsetLoan_individual" member.pk loan_balance%}', "{{current_loan.0.pk}}"])
+
+$('#send_offsetbtn').on('click', function(){
+
+
+Indi_offset_ops.send_offset_request();
+});
+
+
+
+</script>
+
+
+
+{% endblock content %}

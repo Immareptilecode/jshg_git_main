@@ -1,0 +1,1083 @@
+{%  extends "base_portal.html" %}
+
+{% block content %}
+
+{% load static %}
+{% load humanize %}
+          <!-- modals start-->
+
+
+    <!-- modals loan application -->   
+
+    <!--First loan application modal -->  
+    
+    <!-- --> 
+    <!-- --> 
+
+    <div class="ui basic modal large" id="loanform">
+	  	<i class="close icon"></i>
+		<div class="header">
+		   LOAN APPLICATION 
+		</div>
+
+		<div class=" content">
+
+			<div class="ui ten column grid stackable">
+				<div class="five wide column">
+					<div class="segment">
+						
+					</div>
+					<div class="ui steps fluid tablet stackable ">
+
+					  <div class="active step" id='loanstep1'>
+						    <i class="Active select icon"></i>
+						    <div class="content">
+							      <div class="title">Select Loan Type</div>
+							      <div class="description">Start by selecting the type of loan application.</div>
+						    </div>
+					  </div>
+
+					  <div class="step" id='loanstep2'>
+						    <i class="search icon"></i>
+						    <div class="content">
+						      <div class="title">Member/Group Search</div>
+						      <div class="description">Perform the respective search to verify the membership information of the applicant.</div>
+						    </div>
+					  </div>
+
+					  <div class="step">
+						    <i class=" signup icon"></i>
+						    <div class="content">
+						      <div class="title">Fill loan application loan</div>
+						      <div class="description">Click on the search result to open the application loan form.</div>
+						    </div>
+					  </div>
+
+					</div>
+
+				</div>
+			</div>
+				<div class="ui styled accordion" id="members_stats">
+					<div class="title inverted" id="accordtits">
+						Individual Application
+						<i class="dropdown icon"></i>
+
+					</div>
+					<div class="content">
+
+						<div class="field">
+							<div class="ui search" id="mssearch">
+
+										<div class="ui icon input">
+											<input class="prompt fluid" placeholder="Use Membership No." type="text">
+										    <i class="search icon"></i>
+								    	</div>
+
+										<div class="results">
+											
+										</div>
+								
+							</div>
+						</div>
+					<!-- END of content-->		
+					</div>
+
+					<div class="title inverted" id="accordtits1">
+						Group Application
+
+						<i class="dropdown icon"></i>
+					</div>
+					<div class="content">
+						
+
+						<div class="field">
+							<div class="ui category search" id="gssearch">
+
+								<div class="ui icon input">
+									<input class="prompt fluid" placeholder="Use Membership No." type="text">
+								    <i class="search icon"></i>
+						    	</div>
+
+								<div class="results">
+									
+								</div>
+						
+							</div>
+						</div>
+					<!-- END of content-->		
+					</div>
+
+
+
+
+
+
+				</div>
+				
+			  	
+			
+		</div>
+		<div class="actions">
+
+			<div class="ui black deny button">
+		      Close
+		    </div>
+
+		    <div class="ui blue submit button">
+		      Submit
+		    </div>
+		</div>
+
+	</div>
+
+
+
+<!-- --> 
+<div class="ui basic modal large" id="loanform2">
+	  	<i class="close icon"></i>
+		<div class="header">
+		   Individual LOAN APPLICATION 
+		</div>
+		<div class=" content">
+			<div class="ui ten column grid stackable">
+				<div class="five wide column">
+					
+
+						
+
+				
+						<div class="ui steps fluid tablet stackable ">
+
+						  <div class=" step" id='loanstep11'>
+							    <i class="Active select icon"></i>
+							    <div class="content">
+								      <div class="title">Select Loan Type</div>
+								      <div class="description">Start by selecting the type of loan application.</div>
+							    </div>
+						  </div>
+
+						  <div class="step" id='loanstep22' >
+							    <i class="search icon"></i>
+							    <div class="content">
+							      <div class="title">Member/Group Search</div>
+							      <div class="description">Perform the respective search to verify the membership information of the applicant.</div>
+							    </div>
+						  </div>
+
+						  <div class="step" id='loanstep33'>
+							    <i class=" signup icon"></i>
+							    <div class="content">
+							      <div class="title">Fill loan application loan</div>
+							      <div class="description">Click on the search result to open the application loan form.</div>
+							    </div>
+						  </div>
+
+						</div>
+				</div>
+
+
+			</div>
+			<form class="ui form" id="individual_loan_form">
+					{% csrf_token%}
+					<div class="ui inverted segment">
+						<h4 class="ui dividing header">Personal Information</h4>
+						<div class="fields">
+
+										<div class="field">
+										
+												<label>First Name</label>
+												<input placeholder="First Name" type="text" id="Individual_fname">
+											
+												
+										</div>
+
+										<div class="field" >
+											
+												<label>Last Name</label>
+												<input placeholder="Last Name" type="text" id="Individual_lname">
+											
+											
+										</div>
+
+										<div class="field">
+											
+													
+												<label> Membership No.</label>
+												<input placeholder="Membership No." type="text" id="Individual_mno">
+											
+
+										</div>
+
+										<div class="field disabled">
+					      
+					        <input name="shipping[last-name]" placeholder="Membership number" type="password" id="m_pk" hidden="true">
+					      </div>
+						</div>
+
+						
+
+
+					
+
+					<div class="ui inverted segment">
+									
+									<h4 class="ui dividing header">loan Information</h4>	
+
+									
+									<div class="fields">
+
+										<div class="field">
+											<div class="item" data-tooltip="Type the amount and hit enter to calculate the repayment period!" data-position="bottom left" data-inverted="" data-variation="tiny">
+													
+												<label>Loan Amount</label>
+											
+											</div>	
+											<div class="ui labeled input">
+												<label for="amount" class="ui inverted green label">Ksh</label>
+											
+												<input placeholder="loan amount" type="text" id="individual_loan_amount">
+												  
+											</div>
+											
+										</div>
+										
+										<div class="field">
+											<label>Loan repayment period.</label>
+											
+											<div class="ui disabled input">
+											  <input placeholder="loan_amount" type="text" id="individual_loan_period">
+											</div>
+
+										</div>
+
+										<div class="field">
+										
+												<label>Date of Disbursment </label>
+												<input placeholder="Date" type="date" id="individual_loan_date">
+											
+												
+										</div>
+										
+											
+									</div>
+
+									<div class="grouped fields">
+										<div class="field">
+											<label> Gurantors</label>
+												<div class="ui  multiple search selection dropdown">
+													<input name="country" type="hidden" id="Individual_gurantors">
+													<i class="dropdown icon"></i>
+													<div class="default text">Select Gurantors</div>
+													<div class="menu">
+														{% for i in members%}
+
+														<div class="item" data-value='{{i.pk}}'></i>{{i.membership_no}} {{i.first_name}}  {{i.last_name}}</div>
+														
+														{% endfor %}
+													</div>
+												</div>
+										</div>
+									<div class="ui error message">
+								    	<div class="header">ooops... wait!</div>
+								    	<p id="loan_app_error_individual">This member may have unsettled loans.</p>
+						  			</div>	
+
+						  			<div class="ui success message">
+								    	<div class="header">Success</div>
+								    	<p id="loan_app_success_individual">Loan application successfull !</p>
+						  			</div>	
+
+										
+						</div>
+
+									
+										
+
+										
+						</div>
+									
+
+									    
+
+							
+									
+					</div>
+
+
+
+
+
+
+
+		</div>
+
+
+
+		
+		<div class="actions">
+
+			<div class="ui black deny button">
+		      Close
+		    </div>
+
+		    <div class="ui blue submit button" id="Individual_loan_form_submit">
+		      Submit
+		    </div>
+		</div>
+		</form>
+	</div>
+
+
+
+
+
+
+	<div class="ui basic modal " id="loanform3">
+	  	<i class="close icon"></i>
+		<div class="header">
+		   Group LOAN APPLICATION 
+		</div>
+		<div class=" content">
+			<div class="ui ten column grid stackable">
+				<div class="five wide column">
+						<div class="ui steps fluid tablet stackable">
+
+						  <div class="step " id='loanstep111'>
+							    <i class="Active select icon"></i>
+							    <div class="content">
+								      <div class="title">Select Loan Type</div>
+								      <div class="description">Start by selecting the type of loan application.</div>
+							    </div>
+						  </div>
+
+						  <div class="step" id='loanstep222' >
+							    <i class="search icon"></i>
+							    <div class="content">
+							      <div class="title">Member/Group Search</div>
+							      <div class="description">Perform the respective search to verify the membership information of the applicant.</div>
+							    </div>
+						  </div>
+
+						  <div class="step" id='loanstep333'>
+							    <i class=" signup icon"></i>
+							    <div class="content">
+							      <div class="title">Fill loan application loan</div>
+							      <div class="description">Click on the search result to open the application loan form.</div>
+							    </div>
+						  </div>
+
+						</div>
+						
+						
+				</div>
+
+						
+				
+			</div>
+				<form class="ui form" id="group_loan_form">
+					{% csrf_token%}
+					<div class="ui segment" id= "Group_applicant">
+							<div class="field">
+					    <h4 class="ui dividing header" >Applicant Details</h4>
+					    <div class="two fields">
+					      <div class="field">
+					      	<label>Group name</label>
+					        <input name="" placeholder="Group Name" type="text" id="groupname">
+					      </div>
+					      <div class="field">
+					      	<label> Membership Number</label>
+					        <input name="shipping[last-name]" placeholder="Membership number" type="text" id="Group_mno">
+					      </div>
+
+					       
+					    </div>
+					</div>			
+
+					</div>
+
+				
+					<div class="ui inverted segment">
+									
+										<h4 class="ui dividing header">loan Information</h4>	
+
+									
+									<div class=" fields">
+
+										<div class="field">
+											<div class="item" data-tooltip="Type the amount and hit enter to calculate the repayment period!" data-position="bottom left" data-inverted="" data-variation="tiny">
+													
+												<label>Loan Amount</label>
+											
+											</div>	
+											<div class="ui right labeled input">
+												<label for="amount" class="ui inverted green label">Ksh</label>
+													
+												<input placeholder="loan amount" type="text" id="group_loan_amount">
+												  
+											</div>
+											
+										</div>
+										
+										<div class="field">
+											<label>Loan repayment period.</label>
+											
+											<div class="ui disabled input">
+											  <input placeholder="loan_amount" type="text" id="group_loan_period">
+											</div>
+
+										</div>
+
+										<div class="field">
+										
+												<label>Date of Disbursment </label>
+												<input placeholder="Date" type="date" id="group_date_disbursment">
+											
+												
+										</div>
+											<div class="field disabled">
+										      
+										        <input name="shipping[last-name]" placeholder="Membership number" type="password" id="g_pk" hidden="true">
+										      </div>
+									</div>
+										
+									<div class="grouped fields">
+										<div class="field">
+											<label> Gurantors</label>
+												<div class="ui  multiple search selection dropdown">
+													<input name="country" type="hidden" id="group_gurantors">
+													<i class="dropdown icon"></i>
+													<div class="default text">Select Gurantors</div>
+													<div class="menu">
+														{% for i in members%}
+
+														<div class="item" data-value='{{i.pk}}'></i>{{i.membership_no}} {{i.first_name}}  {{i.last_name}}</div>
+														
+														{% endfor %}
+													</div>
+												</div>
+										</div>
+
+										<div class="ui error message">
+								    	<div class="header">Wait... someting went wrong!</div>
+								    	<p id="loan_app_error_group">This GROUP may have unsettled loans.</p>
+						  				</div>	
+
+
+						  				<div class="ui success message">
+								    	<div class="header">Success!</div>
+								    	<p id="loan_app_success_group">Loan application successfull!</p>
+						  				</div>
+									</div>
+
+								
+
+							
+									
+					</div>
+
+				
+		</div>
+		
+		<div class="actions">
+
+			<div class="ui black deny button">
+		      Close
+		    </div>
+
+		    <div class="ui blue submit button" id="group_submit_button">
+		      Submit
+		    </div>
+		</div>
+		</form>
+	</div>
+
+
+
+
+
+
+
+
+
+           <!-- modals end-->
+<div class="ui stackable sixteen column grid container fluid">
+
+	<div class="ten wide column">
+		
+		<div class="ui styled accordion" id="members_stats">
+			<h4 class="ui attached header inverted">		INDIVIDUAL LOANS ANALYSIS</h4>
+									<div class="title">
+									    <i class="dropdown icon"></i>
+									    <div class="ui medium statistic">
+													<div class="value">
+											  		{{repaid|length}}
+											  		</div>
+												  	<div class="label">
+												  	{% if repaid|length > 1 %}
+												  	Repaid loans
+												  	{% else%}
+												  	Repaid loan
+												  	{%endif%}
+												    
+												  	</div>
+	   											</div> 
+
+									</div>
+  									
+  									<div class="content">
+	   									<p class="transition hidden">
+	   									
+	   											
+	   											
+
+	   											<table class="ui sortable celled table unstackable" id="repaid_table">
+												  <thead>
+												    <tr>
+												      <th>Membership No.</th>
+												      <th>Name</th>
+												      <th class="">Amount</th>
+												      <th class="sorted descending">Date</th>
+												    </tr>
+												  </thead>
+												  <tbody>
+												    
+												    
+													{% for i in repaid%}
+
+												  <tr>
+
+													  <td> {{i.Borrower.membership_no}}</td>
+												      <td>{{i.Borrower}}</td>
+												      <td class="positive">{{i.Amount|intcomma}} Ksh</td>
+												      <td class="warning">{{i.Date_disbursment}}</td>
+												    </tr>
+												  
+												  {% endfor%}
+												</tbody>
+												  
+												</table>
+	   										
+										
+	    								
+	    								</p>
+  									</div>
+
+  									<div class="title">
+									    <i class="dropdown icon"></i>
+									   <div class="ui medium statistic">
+													<div class="value">
+														{{defaulters|length}}
+													</div>
+													<div class="label">
+											    		{% if defaulters|length > 1 %}
+													  	Defaulted loans
+													  	{% else%}
+													  	Defaulted loan
+													  	{%endif%}
+													</div>
+	   											</div>
+									</div>
+  									
+  									<div class="content">
+
+	   									<p class="transition hidden">
+	   								
+	   											<table class="ui sortable celled table unstackable" id="defaulting_table">
+												  <thead>
+												    <tr>
+												      <th>Membership No.</th>
+												      <th>Name</th>
+												      <th class="">Amount</th>
+												      <th class="sorted descending">Date</th>
+												    </tr>
+												  </thead>
+												  <tbody>
+												    
+												    
+													{% for i in defaulters%}
+
+												  <tr>
+												  	  <td> {{i.Borrower.membership_no}}</td>
+												      <td>{{i.Borrower}}</td>
+												      <td class="positive">{{i.Amount|intcomma}}  Ksh</td>
+												      <td class="warning">{{i.Date_disbursment}}</td>
+												    </tr>
+												  
+												  {% endfor%}
+												</tbody>
+												  
+												</table>
+	   										
+	   										
+										
+	    								
+	    								</p>
+  									</div>
+
+  									<div class="title">
+									    <i class="dropdown icon"></i>
+									    <div class="ui medium statistic">
+													<div class="value">
+														{{pending|length}}
+													</div>
+													<div class="label">
+											    		{% if pending|length > 1 %}
+													  	Pending loans
+													  	{% else%}
+													  	Pending loan
+													  	{%endif%}
+													</div>
+	   											</div>
+									</div>
+  									
+  									<div class="content">
+
+	   									<p class="transition hidden">
+	   								
+	   											<table class="ui sortable celled table unstackable" id="pending_table">
+												  <thead>
+												    <tr>
+												      <th>Membership No.</th>
+												      <th>Name</th>
+												      <th class="">Amount</th>
+												      <th class="sorted descending">Date</th>
+												    </tr>
+												  </thead>
+												  <tbody>
+												    
+												    
+													{% for i in pending%}
+
+												  <tr>
+
+												      <td>{{i.Borrower.membership_no}}</td>
+												      <td>{{i.Borrower}}</td>
+												      <td class="positive">{{i.Amount|intcomma}} Ksh</td>
+												      <td class="warning">{{i.Date_disbursment}}</td>
+												    </tr>
+												  
+												  {% endfor%}
+												</tbody>
+												  
+												</table>
+	   										
+	   										
+										
+	    								
+	    								</p>
+  									</div>
+ 		</div>
+
+
+
+
+
+ 		
+
+
+
+
+		<!-- THe end of analysis column-->
+
+
+
+
+		
+
+
+	</div>
+
+
+
+
+	
+
+
+		
+		<!-- end of  menu column   	<div class="ui category search item">
+			    <div class="ui transparent icon input">
+			      <input class="prompt" placeholder="Search Group ..." type="text">
+			      <i class="search link icon"></i>
+			    </div>
+			    <div class="results"></div>
+		 
+			</div>
+--> 
+
+
+	<div class=" five wide column">
+		
+				<div class="ui inverted blue segment">
+						<h2 class="ui center aligned icon sub header">
+						  <i class="circular user icon"></i>
+						  Individual loan Summary
+						</h2>
+				
+					  	<div class="item" data-tooltip="Search for an individual to view a detailed loan summary" data-position="bottom left" data-inverted="" data-variation="tiny">
+					  		<div class="ui category search" id="m_summary_search">
+
+										<div class="ui icon input large">
+											<input class="prompt fluid" placeholder="Search for Member" type="text">
+										    <i class="search icon"></i>
+								    	</div>
+
+										<div class="results">
+											
+										</div>
+								
+							</div>
+						</div>
+				</div>
+					
+					</br>
+					<div class="ui inverted olive segment">
+						<h2 class="ui center aligned icon sub header">
+						  <i class="circular users icon"></i>
+						  Group loan Summary
+						</h2>
+
+					  	<div class="item" data-tooltip="search for a group to view a detailed loan summary" data-position="bottom left" data-inverted="" data-variation="tiny">
+					  		<div class="ui category search" id="g_summary_search">
+
+										<div class="ui input">
+											<input class="prompt fluid" placeholder="Search for Group " type="text">
+										    
+								    	</div>
+
+										<div class="results">
+											
+										</div>
+								
+							</div>
+						</div>
+
+
+					</div>
+			
+						
+
+				</br>
+			
+					
+					  <a class="ui teal button " id="launch_loanform">
+
+					    New Loan Application
+
+					  </a>
+				
+		 
+
+	</div>
+
+			
+
+
+</div>
+
+<div class="ui stackable sixteen column grid container fluid">
+
+	<div class="ten wide column">
+		
+
+
+	
+	
+ 		<div class="ui styled accordion " id="members_stats">
+
+ 		<h4 class="ui top attached inverted header">		GROUP LOANS ANALYSIS</h4>
+									<div class="title">
+									    <i class="dropdown icon"></i>
+									    <div class="ui medium statistic">
+													<div class="value">
+											  		{{g_repaid|length}}
+											  		</div>
+												  	<div class="label">
+												  	{% if g_repaid|length > 1 %}
+												  	Repaid loans
+												  	{% else%}
+												  	Repaid loan
+												  	{%endif%}
+												    
+												  	</div>
+	   											</div> 
+
+									</div>
+  									
+  									<div class="content">
+	   									<p class="transition hidden">
+	   									
+	   											
+	   											
+
+	   											<table class="ui sortable celled table unstackable" id="repaid_table">
+												  <thead>
+												    <tr>
+												   	  <th>Membership No.</th>
+												      <th>Name</th>
+												      <th class="">Amount</th>
+												      <th class="sorted descending">Date</th>
+												    </tr>
+												  </thead>
+												  <tbody>
+												    
+												    
+													{% for i in g_repaid%}
+
+												  <tr>
+												  	<td>{{i.Borrower.membership_no}}</td>
+												      <td>{{i.Borrower}}</td>
+												      <td class="positive">{{i.Amount|intcomma}}  Ksh</td>
+												      <td class="warning">{{i.Date_disbursment}}</td>
+												    </tr>
+												  
+												  {% endfor%}
+												</tbody>
+												  
+												</table>
+	   										
+										
+	    								
+	    								</p>
+  									</div>
+
+  									<div class="title">
+									    <i class="dropdown icon"></i>
+									   <div class="ui medium statistic">
+													<div class="value">
+														{{g_defaulters|length}}
+													</div>
+													<div class="label">
+											    		{% if defaulters|length > 1 %}
+													  	Defaulted loans
+													  	{% else%}
+													  	Defaulted loan
+													  	{%endif%}
+													</div>
+	   											</div>
+									</div>
+  									
+  									<div class="content">
+
+	   									<p class="transition hidden">
+	   								
+	   											<table class="ui sortable celled table unstackable" id="defaulting_table">
+												  <thead>
+												    <tr>
+												      <th>Membership No.</th>
+												      <th>Name</th>
+												      <th class="">Amount</th>
+												      <th class="sorted descending">Date</th>
+												    </tr>
+												  </thead>
+												  <tbody>
+												    
+												    
+													{% for i in g_defaulters%}
+
+												  <tr>
+												  	  <td>{{i.Borrower.membership_no}}</td>
+												      <td>{{i.Borrower}}</td>
+												      <td class="positive">{{i.Amount|intcomma}} Ksh</td>
+												      <td class="warning">{{i.Date_disbursment}}</td>
+												    </tr>
+												  
+												  {% endfor%}
+												</tbody>
+												  
+												</table>
+	   										
+	   										
+										
+	    								
+	    								</p>
+  									</div>
+
+  									<div class="title">
+									    <i class="dropdown icon"></i>
+									    <div class="ui medium statistic">
+													<div class="value">
+														{{g_pending|length}}
+													</div>
+													<div class="label">
+											    		{% if g_repaid|length > 1 %}
+													  	Pending loans
+													  	{% else%}
+													  	Pending loan
+													  	{%endif%}
+													</div>
+	   											</div>
+									</div>
+  									
+  									<div class="content">
+
+	   									<p class="transition hidden">
+	   								
+	   											<table class="ui sortable celled table unstackable" id="pending_table">
+												  <thead>
+												    <tr>
+												      <th>Membership No.</th>
+												      <th>Name</th>
+												      <th class="">Amount</th>
+												      <th class="sorted descending">Date</th>
+												    </tr>
+												  </thead>
+												  <tbody>
+												    
+												    
+													{% for i in g_pending%}
+
+												  <tr>
+												  	  <td>{{i.Borrower.membership_no}}</td>
+												      <td>{{i.Borrower}}</td>
+												      <td class="positive">{{i.Amount|intcomma}} Ksh</td>
+												      <td class="warning">{{i.Date_disbursment}}</td>
+												    </tr>
+												  
+												  {% endfor%}
+												</tbody>
+												  
+												</table>
+	   										
+	   										
+										
+	    								
+	    								</p>
+  									</div>
+ 		<!-- end of group analysis accordination -->
+ 		</div>
+
+ 	</div>
+</div>
+<script type="text/javascript" src="{% static 'js/tablesort.js'%}"></script>
+
+<script type="text/javascript" src="{% static 'js/jshg_portal/loans/loan_application.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/jshg_portal/loans/loan_summary.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/jshg_portal/loans/loan_rypmnt.js'%}"></script>
+<script type="text/javascript">
+
+
+
+$('.ui.accordion').accordion();
+
+$('.ui.search').dropdown();
+$('#repaid_table').tablesort();
+
+$('#pending_table').tablesort();
+
+$('#defaulting_table').tablesort();
+
+
+$('#loanform').modal({blurring:true}).modal('attach events', '#launch_loanform', 'show');
+
+
+
+
+//call to get groups application
+$(document).ready( function(){
+	get_groups_application("{% url 'grouplistloan_app'%}");
+});
+
+
+
+
+
+//call to get members application
+$(document).ready( function(){
+	get_members_application("{% url 'customerlistloan_app'%}");
+});
+
+
+
+
+
+	$("#accordtits").on('click', function(){
+		$('#loanstep1').addClass('completed');
+		$('#loanstep1').removeClass('active');
+		$('#loanstep2').addClass('active');
+
+	
+	});
+	$("#accordtits1").on('click', function(){
+		$('#loanstep1').addClass('completed');
+		$('#loanstep1').removeClass('active');
+		$('#loanstep2').addClass('active');
+
+	
+	});
+	$('#Individual_loan_form_submit').on('click', function(form){
+		var mmno=$('#Individual_mno').val();
+		var url_mask = "{% url 'applyloan' mid=12345 %}".replace(/12345/, mmno);
+		
+		send_app_individual(url_mask);
+	});
+
+	$('#group_submit_button').on('click', function(form){
+		var g_mmno=$('#Group_mno').val();
+		var url_mask = "{% url 'applyloan_group' mid=12345 %}".replace(/12345/, g_mmno);
+
+		send_app_group( url_mask);
+	});
+
+
+
+</script>
+
+
+<script type="text/javascript">
+	var get_members_summary= function(){
+	 $.get(
+	 	"{% url 'customerlistloan'%}",
+	 	
+
+		function  (data) {
+					console.log();
+					$('#m_summary_search')
+					.search({
+
+						searchFields   : [
+					      'membership_no'
+					    ],
+
+					    fields: {
+
+					    image: 'img',
+					    description: 'membership_no',
+					  
+					    title:'fname'
+					   },
+
+					source: data,
+					type: 'standard',
+					fullTextSearch: 'exact',
+					minCharacters: 3,
+					
+					onSelect: function(result, response){
+						$('#loansummary_individual').modal('show');
+						$('#indi_summary_header').html(response[0]['fname'].toUpperCase()  + response[0]['lname'].toUpperCase() + "' S "  + "LOAN SUMMARY" );
+						
+												
+					
+					}
+
+
+					});
+
+					
+
+		},
+
+
+		);
+};
+
+
+
+$(document).ready( function () {
+
+get_groups_summary("{% url 'grouplistloan'%}");
+get_members_summary("{% url 'customerlistloan'%}");
+});
+
+
+</script>
+{% endblock content %}

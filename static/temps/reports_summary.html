@@ -1,0 +1,413 @@
+{%  extends "base_portal.html" %}
+
+{% block content %}
+
+{% load static %}
+
+{% load humanize %}
+
+<div class="ui inverted blue clearing segment">
+<h3 class="ui center aligned header">
+	
+	FINANCIAL REPORT
+</h3>
+
+
+<h5 class="ui left Floated header" id=success_message_tf>
+	you are currently viewing reports for this date: {{date_viewing}}
+	
+</h5>
+</div>
+
+
+<div class="ui container">
+	
+	
+	<div class="ui stackable sixteen column grid container fluid">
+		<div class="five wide column">
+			
+
+			<div class="ui clearing indigo segment" >
+
+				<div class="item" data-tooltip="Select one of the options below to view more detailed information." data-position="right" data-inverted="" data-variation="tiny">
+					<h3 class="ui floated header">
+					
+						Downloads
+					</h3>
+				</div>
+
+
+
+
+			</div>
+
+			</br>
+			<div class="ui clearing black segment" >
+
+				
+				<form class="ui inverted form " method="post" id="timetravel_form">
+
+					{% csrf_token%}
+
+						<div class="ui error message">
+					    	<div class="header">Please select the first day of the month.</div>
+					    	
+			  			</div>
+
+			  			<div class="ui success message">
+					    	<div class="header">success</div>
+					    	<p > Please wait while we fetch the data.</p>
+			  			</div>
+
+			  			<div class="item" data-tooltip="Eg. 01/09/2019   or 01/12/2018  ........ basically make sure its the first (1st)  of that month" data-position="bottom-right" data-inverted="" data-variation="tiny">
+
+					
+							<h3 class="ui left floated header">
+				
+								Select the FIRST DAY of the month you want to analyze
+							</h3>
+						</div>
+					{{form}}
+
+						<input class="ui green button"  type="submit">
+						
+
+						</input>
+
+				</form>
+			</div>
+
+
+			
+			
+
+
+			
+
+		</div>  <!--5 wide column  left main menu -->
+
+
+		<div class="eleven wide column">
+		
+			<h1 class="ui clearing header"> INCOME FIGURES</h1>
+				
+
+				<div class="ui sixteen column grid">
+					
+					<div class="three wide column">
+						<div class="ui vertical fluid tabular menu " id="menuReports">
+					    	<div class="active item" data-tab="fines" id="itemenureports"> 
+					        	FINES
+					    	</div>
+					        <div class="item" data-tab="charges" id="itemenureports">
+					        	CHARGES
+					        </div>
+					        <div class="item" data-tab="loans" id="itemenureports">
+					        	LOANS
+					        </div>
+					        <div class="item" data-tab="shares" id="itemenureports">
+					        	SHARES
+					        </div>
+		      				
+		      			
+	    				</div>	
+
+
+					</div>
+
+					<div class="thirteen wide column">
+						
+							<div class="ui segment">
+					
+								<div class="ui active tab" data-tab="fines">
+										<div class="ui top attached label red">FINES RELATED</div>
+											  <!-- Tab Content !-->
+											  {%if fines%}
+
+
+											  
+										{% for k, v in fines.items%}
+
+											  				
+											  				<div class="ui red segment">
+
+																<h3 class="ui center aligned header" id="heder_loans_account">
+																		{{k}}
+																</h3>
+																
+																<div class="ui two column grid stackable">
+																		<div class="column">
+									   											<div class="ui medium statistic">
+																					<div class="value" id="value_month_loans">
+																			  		{{v.0}}
+																			  		</div>
+																				  	<div class="label" id="label_month_loans">
+																				  	 {{month_viewing}}
+																				    
+																				  	</div>
+									   											</div> 
+									   									</div>
+
+
+
+									   									<div class="column">
+									   											<div class="ui medium statistic">
+																					<div class="value" id="value_year_loans">
+																			  		{{v.1}}
+																			  		</div>
+																				  	<div class="label" id="label_year_loans">
+																				  	Year {{date_viewing.year}}
+																				    
+																				  	</div>
+									   											</div> 
+							   											</div>
+
+							   									</div> <!-- content Grid  -->
+
+															</div><!--red segment -->
+											  			
+														
+														{%endfor%}
+
+									 {%else%}
+									 <h3 class="ui left Floated header" >
+											NO PAYMENT DATA FOR THE REQUESTED DATE.
+											
+										</h3>
+											 
+									 {%endif%}
+									</div> <!--Fines tab -->
+									
+
+
+
+									<div class="ui tab" data-tab="charges">
+										<div class="ui top attached label orange">CHARGES RELATED</div>
+											  <!-- Tab Content !-->
+											
+
+												 {%if charges%}
+													{% for k, v in charges.items%}
+
+											  				
+											  				<div class="ui orange segment">
+
+																<h3 class="ui center aligned header" id="heder_loans_account">
+																		{{k}}
+																</h3>
+																
+																<div class="ui two column grid stackable">
+																		<div class="column">
+									   											<div class="ui medium statistic">
+																					<div class="value" >
+																			  		{{v.0}}
+																			  		</div>
+																				  	<div class="label" >
+																				  	 {{month_viewing}}
+																				    
+																				  	</div>
+									   											</div> 
+									   									</div>
+
+
+
+									   									<div class="column">
+									   											<div class="ui medium statistic">
+																					<div class="value" >
+																			  		{{v.1}}
+																			  		</div>
+																				  	<div class="label" >
+																				  	Year {{date_viewing.year}}
+																				    
+																				  	</div>
+									   											</div> 
+							   											</div>
+
+							   									</div> <!-- content Grid  -->
+
+															</div><!--red segment -->
+											  			
+														
+														{%endfor%}
+
+													{%else%}
+													 <h3 class="ui left Floated header" >
+											NO PAYMENT DATA FOR THE REQUESTED DATE.
+											
+										</h3>
+
+													{%endif%}
+
+												
+										
+									</div> <!-- charges tab -->
+
+
+									<div class="ui tab" data-tab="loans">
+										<div class="ui top attached label black">LOANS RELATED</div>
+											  <!-- Tab Content !-->
+											
+											  			
+															<div class="ui black segment">
+
+																<h3 class="ui center aligned header" id="heder_loans_account">
+																		Interest Earned on Loans
+																</h3>
+																
+																<div class="ui grid stackable">
+																		<div class="column">
+									   											<div class="ui medium statistic">
+																					<div class="value" >
+																			  			{{loan_interest_month|intcomma}}
+																			  		</div>
+																				  	<div class="label" >
+																				   {{month_viewing}}
+																				    
+																				  	</div>
+									   											</div> 
+									   									</div>
+
+
+
+									   								
+
+							   									</div> <!-- content Grid  -->
+							   									<div class="ui grid stackable">
+
+							   										<div class="column">
+									   											<div class="ui medium statistic">
+																					<div class="value">
+																			  		{{loan_interest_year|intcomma}}
+																			  		</div>
+																				  	<div class="label">
+																				  	Year {{date_viewing.year}}
+																				    
+																				  	</div>
+									   											</div> 
+							   											</div>
+
+
+							   									</div> <!-- content Grid  -->
+
+															</div><!--red segment -->
+
+
+															<div class="ui black segment">
+
+																<h3 class="ui center aligned header" >
+																		Outstanding Loans
+																</h3>
+																<div class="ui grid stackable">
+
+							   										<div class="column">
+									   											<div class="ui medium statistic">
+																					<div class="value" >
+																			  		{{loans_outstanding|intcomma}}
+																			  		</div>
+																				  	<div class="label" >
+																				  	Year {{date_viewing.year}}
+																				    
+																				  	</div>
+									   											</div> 
+							   											</div>
+
+
+							   									</div> <!-- content Grid  -->
+
+															</div><!--red segment -->
+
+
+
+												
+									</div> <!--Loans tab -->
+
+
+									<div class="ui tab" data-tab="shares">
+										<div class="ui top attached label violet">SHARES RELATED</div>
+											  <!-- Tab Content !-->
+											<div class="ui grid stackable">
+
+
+											  			<div class="column">
+											  				
+
+											  			
+															<div class="ui  violet segment">
+
+																<h3 class="ui center aligned header" >
+																		SHARES CONTRIBUTION INCOME
+																</h3>
+																
+																<div class="ui two column grid ">
+																		<div class="column">
+									   											<div class="ui medium statistic">
+																					<div class="value" >
+																			  		{{shares.shares.0|intcomma}}
+																			  		</div>
+																				  	<div class="label" >
+																				  	{{month_viewing}}
+																				    
+																				  	</div>
+									   											</div> 
+									   									</div>
+
+
+
+									   									<div class="column">
+									   											<div class="ui medium statistic">
+																					<div class="value" >
+																			  		{{shares.shares.1|intcomma}}
+																			  		</div>
+																				  	<div class="label" >
+																				  	Year {{date_viewing.year}}
+																				    
+																				  	</div>
+									   											</div> 
+							   											</div>
+
+							   									</div> <!-- content Grid  -->
+
+															</div><!--red segment -->
+
+
+
+														</div>  <!-- column  -->
+
+												
+												</div> <!--Grid Fines -->
+
+									</div><!--shares tab -->
+
+							</div><!--outer ui segment menu -->
+
+						</div>  <!--13 column wide  content for menu  -->
+					</div> <!--16 column grid housing 13 wide  content and 3 wide menu INCOME FIGURES-->
+
+					
+
+
+
+
+
+				</div><!--11 column wide center content-->
+
+				
+								
+		</div>
+
+
+
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+
+	$('#menuReports #itemenureports').tab();
+
+
+	
+
+</script>
+{% endblock content %}

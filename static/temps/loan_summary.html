@@ -1,0 +1,256 @@
+{%  extends "base_portal.html" %}
+
+{% block content %}
+
+{% load static %}
+
+{% load humanize %}
+
+
+<!-- modals-->
+<div class="ui basic modal" id="choose_type">
+  <div class="header">REPAYMENT FOR {{current_loan.0.Amount|intcomma}} KSH LOAN</div>
+  <div class="content">
+    
+  		<div class="ui form " method="post" id="paysharesform">
+   		{% csrf_token%}
+   			<div class="ui success message">
+		    	<div class="header">Transaction Completed</div>
+		    	<p id="success_message">Payment Recorded. Please reload the page to refresh the loan repayment table </p>
+  			</div>
+
+  			<div class="ui error message">
+		    	<div class="header">ooops... wait!</div>
+		    	<p id="errormessage">I think you are not Authenicated. Please Reload the page to LOG IN . </p>
+  			</div>
+			<div class="fields">
+			  	<div class="field">
+			  		<label>Amount</label>
+			    	<input type="text" id="amnt">
+
+			  	</div>
+			  	<div class="field">
+			  		<label>Date</label>
+			    	<input type="date" id='DATE'>
+
+			  	</div>
+			    
+			</div>
+		</div>
+
+
+
+  </div>
+  <div class="actions">
+	   	<div class="ui red basic cancel inverted button">
+	      <i class="remove icon"></i>
+	      CLOSE
+	    </div>
+	    <div class="ui green inverted button" id="sendpayment_button">
+	      <i class="checkmark icon"></i>
+	      SUBMIT
+	    </div>
+
+  </div>
+
+  </div>
+</div>
+
+
+
+<!-- End of modals-->
+
+
+
+
+
+
+<div class="ui inverted clearing segment">
+  <h3 class="ui left floated header">
+   {{ME}}
+  </h3>
+
+  <h3 class="ui right floated header">
+   Membership No: {{ME.membership_no}}
+
+</div>
+
+
+  		<div class="ui two column grid stackable">
+  			
+  			<div class="column">
+  				
+
+  								<div class="ui styled accordion" id="members_stats">
+									<div class="title">
+									    <i class="dropdown icon"></i>
+									    <div class="ui medium statistic">
+													<div class="value" id="indi_summary_numnloans">
+											  		{{loans|length}}
+											  		</div>
+												  	<div class="label">
+												  	{% if loans|length > 1 %}
+												  	Pervious loans
+												  	{% else%}
+												  	Pervious loan
+												  	{%endif%}
+												    
+												  	</div>
+	   									</div> 
+
+									</div>
+  									
+  									<div class="content">
+	   									
+	   										<table class="ui selectable celled table unstackable" >
+
+	   												<thead>
+												    <tr>
+												      
+												      <th class="">Amount</th>
+												      <th class="sorted descending">Date of Disbursment</th>
+												      <th class="sorted descending">Gurantors</th>
+												      <th> Status</th>
+												    </tr>
+												  </thead>
+												  <tbody>
+												  	{% for i in loans%}
+
+												  <tr id="indi_summary_table">
+												     
+													
+												   	<td class="loan_ammount">
+
+												      {{i.Amount|intcomma}}
+												  	</td>
+
+												    <td class="warning">{{i.Date_disbursment}}</td>
+												   	<td class="warning">   
+												       	{% for b in i.gurantor.all%}
+												       		
+												  				{{b}}
+												  			</br>
+
+													  	{% endfor%}
+													  	</td>
+													  	<td> {% if i.re_paid %}
+												  				SETTLED.
+												  				{% else %}
+												  				Pending
+
+												  				{% endif %}
+
+
+												  			</td>
+													    </tr>
+												  	
+												  {% endfor%}
+												</tbody>
+												  
+											</table>
+										
+  									</div>
+
+
+  										
+  								</div>
+
+  								
+
+
+  			</div>
+  			<div class="column">
+  				
+
+  				<table class="ui inverted table celled unstackable" id="indi_summary_header">
+  					
+
+  					<thead>
+	   					CURRENT LOAN 
+	   					<h2> Amount {{current_loan.0.Amount|intcomma}}
+
+
+
+	   					</h2>
+
+	   					<h2> Monthly payment {{monthly|intcomma}}
+
+
+
+	   					</h2>
+
+	   					<h4>Payable in {{current_loan.0.installments}} installments.</h4>
+
+	   				</thead>
+					<thead>
+						<tr>
+							<th>Date</th>
+					    	<th>Installment</th>
+					    	<th>Principal</th>
+					    	<th>Interest</th>
+					    	<th>Monthly Payment</th>
+					    </tr>
+					</thead>
+					<tbody >
+						{% for i in cloan%}
+
+						
+		    			
+		    			<td> {{i.date}}</td>	
+		    			<td> {{i.installment|intcomma}}</td>	
+		    			<td> {{i.loan_balance|intcomma}}</td>	
+		    			<td> {{i.interest_charged|intcomma}}</td>		
+		    			<td> {{i.amount_paid|intcomma}}</td>	
+		    			</tr>
+
+
+		   				{%endfor%}
+		  			</tbody>
+		  			<tfoot id="indi_summary_amortotal">
+		    			
+		  			</tfoot>
+				</table>
+
+
+
+
+
+  			</div>
+
+
+
+
+
+
+  		</div>
+  	
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="{%static 'js/customd-jquery-number-c19aa59/jquery.number.js'%} "></script>
+<script type="text/javascript">
+$('.ui.accordion').accordion();	
+$('#choose_type').modal({blurring:true}).modal('attach events', '#launch_payment_options', 'show');
+
+
+</script>
+
+
+<script type="text/javascript" src="{% static 'js/jshg_portal/loans/loan_rypmnt.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.storageapi.js'%}"></script>
+
+{% endblock content %}

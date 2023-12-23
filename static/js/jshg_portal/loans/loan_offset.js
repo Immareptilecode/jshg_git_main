@@ -1,0 +1,1 @@
+$('#loan_offset').modal({blurring:true}).modal('attach events', '#launch_offset', 'show');

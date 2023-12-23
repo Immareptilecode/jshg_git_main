@@ -1,0 +1,200 @@
+{%  extends "base_portal.html" %}
+
+{% block content %}
+
+
+	
+{%load static%}
+
+		
+			
+			<div class="ui stackable  three column grid container">
+
+					<div class=" column ">
+
+							
+
+
+							<div class="ui styled accordion" id="members_stats">
+									<div class="title">
+									    <i class="dropdown icon"></i>
+									    Total Members
+									</div>
+  									
+  									<div class="content">
+	   									<p class="transition hidden">
+	    								<div class="ui medium statistic">
+											  <div class="value">
+											    {{customers|length}}
+											  </div>
+											  <div class="label">
+											    Members
+											  </div>
+										</div>
+	    								</p>
+  									</div>
+
+
+  									<div class="title">
+									    <i class="dropdown icon"></i>
+									    Dormant Members
+									</div>
+  									
+  									<div class="content">
+	   									<p class="transition hidden">
+	    								<div class="ui medium statistic">
+											  <div class="value">
+											    0
+											  </div>
+											  <div class="label">
+											    Members
+											  </div>
+										</div>
+	    								</p>
+  									</div>
+
+
+
+  									<div class="title">
+									    <i class="dropdown icon"></i>
+									    Active Members
+									</div>
+  									
+  									<div class="content">
+	   									<p class="transition hidden">
+	    								<div class="ui medium statistic">
+											  <div class="value">
+											    {{customers|length}}
+											  </div>
+											  <div class="label">
+											    Members
+											  </div>
+										</div>
+	    								</p>
+  									</div>
+  
+							</div>
+
+
+					</div>
+
+
+					<div class=" column ">
+					
+						<h2 class="ui center aligned icon header inverted blue">
+
+						  <i class="circular users icon" data-content="Hello. This is an inverted popup" data-variation="inverted"></i>
+						  
+						  <p>MEMBERSHIP</p>
+						  
+						  
+						</h2>
+					</div>
+
+						<div class=" column ">
+
+
+					
+							
+							<div class="ui category  search" id="msearch">
+
+								<div class="ui icon input">
+									<input class="prompt fluid" placeholder="Use Membership No." type="text">
+								    <i class="search icon"></i>
+						    	</div>
+
+								<div class="results">
+									
+								</div>
+						
+							</div>
+						</div>
+			</div>
+
+				 <div class="ui five column grid">
+			    <div class="column"></div>
+			    <div class="column"></div>
+			    <div class="column">
+					
+				</div>
+      <div class="column"></div>
+      <div class="column"></div>
+    </div>
+
+				
+
+			  	<div class="sixteen wide column">
+				  	<ul>
+						
+					</ul>
+			  	</div>
+
+			</div>
+
+			
+		</div>
+
+
+
+<script type="text/javascript">
+	
+	$('#members_stats').accordion();
+</script>
+
+<script type="text/javascript">
+
+
+var get_members= function(url){
+	 $.get(
+	 	 url,
+
+		function  (data) {
+
+					$('#msearch')
+					.search({
+
+						searchFields   : [
+					      'membership_no'
+					    ],
+
+					    fields: {
+
+					    image: 'img',
+					    description: 'membership_no',
+					    url: 'url',
+					    title:'fname'
+					   },
+
+					source: data,
+					type: 'standard',
+					fullTextSearch: false
+
+
+					});
+
+		},
+
+
+		);
+};
+
+//call to get members
+$(document).ready( function () {
+get_members("{% url 'customerlist'%}");
+});
+
+
+
+
+
+
+//console.log(membersstr.get('customers'))
+
+
+//search is passed the results through source.. 
+
+</script>
+
+
+
+{% endblock content %}
